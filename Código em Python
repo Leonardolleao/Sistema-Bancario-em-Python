@@ -1,0 +1,59 @@
+class ContaBancaria:
+    def __init__(self, saldo_inicial=0):
+        self.saldo = saldo_inicial
+        self.transacoes = []
+
+    def depositar(self, valor):
+        if valor > 0:
+            self.saldo += valor
+            self.transacoes.append(f"Depósito: +R$ {valor:.2f}")
+            print(f"Depósito de R$ {valor:.2f} realizado com sucesso.")
+        else:
+            print("O valor do depósito deve ser positivo.")
+
+    def sacar(self, valor):
+        if 0 < valor <= self.saldo:
+            self.saldo -= valor
+            self.transacoes.append(f"Saque: -R$ {valor:.2f}")
+            print(f"Saque de R$ {valor:.2f} realizado com sucesso.")
+        elif valor > self.saldo:
+            print("Saldo insuficiente para realizar o saque.")
+        else:
+            print("O valor do saque deve ser positivo.")
+
+    def extrato(self):
+        print("\n=== Extrato da Conta ===")
+        if not self.transacoes:
+            print("Nenhuma transação realizada.")
+        else:
+            for transacao in self.transacoes:
+                print(transacao)
+        print(f"Saldo atual: R$ {self.saldo:.2f}")
+        print("========================\n")
+
+def menu():
+    conta = ContaBancaria()
+    while True:
+        print("\n=== Sistema Bancário ===")
+        print("1. Depósito")
+        print("2. Saque")
+        print("3. Extrato")
+        print("4. Sair")
+        opcao = input("Escolha uma opção: ")
+
+        if opcao == "1":
+            valor = float(input("Informe o valor para depósito: "))
+            conta.depositar(valor)
+        elif opcao == "2":
+            valor = float(input("Informe o valor para saque: "))
+            conta.sacar(valor)
+        elif opcao == "3":
+            conta.extrato()
+        elif opcao == "4":
+            print("Saindo do sistema bancário.")
+            break
+        else:
+            print("Opção inválida! Tente novamente.")
+
+# Executar o menu
+menu()
